@@ -1,5 +1,4 @@
 FROM php:7-apache
-MAINTAINER tshinow<rirakkuma.music@gmail.com>
 
 RUN sed -i "s/\/var\/www/\/var\/www\html/g" /etc/apache2/apache2.conf
 RUN sed -i "s/AllowOverride None/AllowOverride All/g" /etc/apache2/apache2.conf
@@ -11,4 +10,4 @@ EXPOSE 80
 RUN export LANG=ja_JP.UTF-8;
 RUN systemctl enable apache2
 
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2-foreground"]
