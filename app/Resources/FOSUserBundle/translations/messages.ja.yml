@@ -1,0 +1,3 @@
+security.login.username: ユーザー名
+security.login.password: パスワード
+security.login.remember_me: パスワードを保存する
