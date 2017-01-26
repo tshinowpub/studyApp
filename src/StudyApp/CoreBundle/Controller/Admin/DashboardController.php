@@ -5,12 +5,12 @@ namespace StudyApp\CoreBundle\Controller\Admin;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomeController {
+class DashboardController {
 
     /**
-     * @Route("/admin/home")
+     * @Route("/admin/dashboard")
      */
-    public function homeAction ()
+    public function dashboardAction ()
     {
         return new Response(
             '<html><body>test</body></html>'
