@@ -848,7 +848,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-01-26 10:33:07"
+            "time": "2017-01-26T10:33:07+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
