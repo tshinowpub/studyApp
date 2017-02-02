@@ -7,3 +7,13 @@ services:
     study_app.area.master.s:
         class: StudyApp\CoreBundle\Api\Master\AreaS
         arguments: []
+
+    study_app.gnavi.config.api.config:
+        class: StudyApp\CoreBundle\Gnavi\Config\ApiConfig
+        arguments: []
+        calls:
+            - ["init", []]
+
+    study_app.gnavi.service.api.service:
+        class: StudyApp\CoreBundle\Gnavi\Service\GnaviApiService
+        arguments: ["@study_app.gnavi.config.api.config"]

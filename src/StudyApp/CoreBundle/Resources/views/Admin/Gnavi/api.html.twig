@@ -1,0 +1,25 @@
+{% extends 'StudyAppCoreBundle:Admin:layout.html.twig' %}
+
+{% block main %}
+    <section class="contents">
+        <header class="header">
+            <h1>レストラン一覧（APIからの取得）</h1>
+        </header>
+        <div class="stores">
+            {% if stores|length > 0 %}
+                {% for store in stores %}
+                    <article class="store">
+                        <h1>{{ store.name }}（{{ store.name_kana }}）</h1>
+                        <div>{{ store.address }}</div>
+                        <div class="access">
+                            {{ store.access.line }}{{ store.access.station }}{{ store.access.walk }}
+                        </div>
+                        <div>{{ store.tel }}</div>
+                        <div>更新日：{{ store.update_date }}</div>
+                        <div><a href="{{ store.url }}">{{ store.url }}</a></div>
+                    </article>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

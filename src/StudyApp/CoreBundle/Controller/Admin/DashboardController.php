@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DashboardController {
 
     /**
-     * @Route("/admin/dashboard")
+     * @Route("/admin/dashboard", name="admin_dashboard")
      */
     public function dashboardAction ()
     {

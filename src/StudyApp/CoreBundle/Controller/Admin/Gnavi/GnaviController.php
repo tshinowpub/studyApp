@@ -11,12 +11,15 @@ use Symfony\Component\Yaml\Parser;
 
 use GuzzleHttp\Client;
 
+use StudyApp\CoreBundle\Gnavi\QueryBuilder\RestQueryBuilder;
 use StudyApp\CoreBundle\Factory\GnaviAreaCodeManeger;
 
 class GnaviController extends Controller
 {
 
     const BASE_URL = 'https://api.gnavi.co.jp/RestSearchAPI/20150630/';
+
+    const COORDINATES_MODE = 1;
 
     /**
      * @Route("/admin/gnavi")
@@ -39,8 +42,8 @@ class GnaviController extends Controller
     }
 
     /**
-     * @Route("/admin/gnavi/api")
-     * @Template("StudyAppCoreBundle:Admin/Store:api.html.twig")
+     * @Route("/admin/gnavi/api", name="admin_gnavi_api")
+     * @Template("StudyAppCoreBundle:Admin/Gnavi:api.html.twig")
      */
     public function apiAction()
     {
@@ -59,6 +62,11 @@ class GnaviController extends Controller
             'query' => [
                 'keyid' => $gnaviConfig['gnavi']['keyid'],
                 'format' => 'json',
+                'input_coordinates_mode' => self::COORDINATES_MODE,
+                'coordinates_mode' => self::COORDINATES_MODE,
+                'latitude' => 34.6952161,
+                'longitude' => 135.5015264,
+                'range' => 3
             ]
         ]);
 
@@ -68,10 +76,27 @@ class GnaviController extends Controller
             $stores = $this->decodeStoreDataByJson($json);
         }
 
-        var_dump($stores);
-        exit;
+        return [
+            'stores' => $stores->rest,
+        ];
+    }
 
-        return [];
+    /**
+     * @Route("/admin/gnavi/api/import", name="admin_gnavi_api_import")
+     * @Template("StudyAppCoreBundle:Admin/Gnavi:import.html.twig")
+     */
+    public function apiImportAction()
+    {
+        $criteria = [];
+
+        $restQueryBuilder = new RestQueryBuilder();
+        $restQueryBuilder->setCriteria($criteria);
+
+        $gnaviApiService = $this->get('study_app.gnavi.service.api.service');
+        $gnaviApiService->setQueryBuilder($restQueryBuilder);
+
+        var_dump($gnaviApiService);
+        exit;
     }
 
     /**

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>レストラン一覧（APIからの取得）</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <h1>飲食店検索アプリ</h1>
+        </header>
+
+        <nav>
+            <h2><a href="{{ path('admin_dashboard') }}">ダッシュボード</a></h2>
+            <h2>ぐるなび</h2>
+            <ul>
+                <li>
+                    <h3><a href="{{ path('admin_gnavi_api') }}">レストラン一覧（APIからの取得）</a></h3>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="main">
+            {% block main %}{% endblock %}
+        </div>
+
+    </div>
+</body>
+</html>
