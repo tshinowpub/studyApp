@@ -61,6 +61,13 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        mappings:
+            StudyApp:
+                type: annotation
+                dir: %kernel.root_dir%/../src/StudyApp/Domain/Gnavi/Entity
+                prefix: StudyApp\Domain\Gnavi\Entity
+                is_bundle: false
+
 
 # Swiftmailer Configuration
 swiftmailer:
