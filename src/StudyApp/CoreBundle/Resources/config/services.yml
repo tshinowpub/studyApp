@@ -1,19 +1,10 @@
 services:
-    study_app.factory.gnavi.area.code.maneger:
-        class: StudyApp\CoreBundle\Factory\GnaviAreaCodeManeger
-        arguments: []
-        calls:
-            - ["setContainer", ["@service_container"]]
-    study_app.area.master.s:
-        class: StudyApp\CoreBundle\Api\Master\AreaS
-        arguments: []
-
-    study_app.gnavi.config.api.config:
-        class: StudyApp\CoreBundle\Gnavi\Config\ApiConfig
+    study_app.domain.gnavi.config.api.config:
+        class: StudyApp\Domain\Gnavi\Config\ApiConfig
         arguments: []
         calls:
             - ["init", []]
 
-    study_app.gnavi.service.api.service:
-        class: StudyApp\CoreBundle\Gnavi\Service\GnaviApiService
-        arguments: ["@study_app.gnavi.config.api.config"]
+    study_app.domain.gnavi.service.api.service:
+        class: StudyApp\Domain\Gnavi\Service\GnaviApiService
+        arguments: ["@study_app.domain.gnavi.config.api.config"]

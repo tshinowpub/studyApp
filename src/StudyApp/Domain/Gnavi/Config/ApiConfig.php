@@ -1,6 +1,6 @@
 <?php
 
-namespace StudyApp\CoreBundle\Gnavi\Config;
+namespace StudyApp\Domain\Gnavi\Config;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -12,7 +12,7 @@ class ApiConfig {
     public function init()
     {
         try {
-            $config = Yaml::parse(file_get_contents(__DIR__ . '/../../Resources/config/gnavi.yml'));
+            $config = Yaml::parse(file_get_contents(__DIR__ . '/../../../CoreBundle/Resources/config/gnavi.yml'));
             if(isset($config['gnavi']['keyid'])) {
                 $this->setKeyId($config['gnavi']['keyid']);
             }

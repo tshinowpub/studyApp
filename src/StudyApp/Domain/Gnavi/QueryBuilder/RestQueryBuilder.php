@@ -1,6 +1,8 @@
 <?php
 
-namespace StudyApp\CoreBundle\Gnavi\QueryBuilder;
+namespace StudyApp\Domain\Gnavi\QueryBuilder;
+
+use StudyApp\Domain\Api\Service\QueryBuilderInterface;
 
 class RestQueryBuilder implements QueryBuilderInterface
 {
@@ -8,11 +10,8 @@ class RestQueryBuilder implements QueryBuilderInterface
     private $query;
     private $format;
 
-    public function setCriteria($criteria)
+    public function setQueryFromCriteria($criteria)
     {
-        $query = array(
-            'format' => 'json',
-        );
 
         if(isset($criteria['input_coordinates_mode'])) {
             $query['input_coordinates_mode'] = $criteria['input_coordinates_mode'];
@@ -39,15 +38,13 @@ class RestQueryBuilder implements QueryBuilderInterface
         return $this;
     }
 
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
     public function buildQuery()
     {
         return http_build_query($this->query);
-    }
-
-    public function setFormat($format = 'json')
-    {
-        $this->format = $format;
-
-        return $this;
     }
 }

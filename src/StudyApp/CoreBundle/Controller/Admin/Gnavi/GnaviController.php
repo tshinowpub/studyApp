@@ -11,8 +11,7 @@ use Symfony\Component\Yaml\Parser;
 
 use GuzzleHttp\Client;
 
-use StudyApp\CoreBundle\Gnavi\QueryBuilder\RestQueryBuilder;
-use StudyApp\CoreBundle\Factory\GnaviAreaCodeManeger;
+use StudyApp\Domain\Gnavi\QueryBuilder\RestQueryBuilder;
 
 class GnaviController extends Controller
 {
@@ -42,33 +41,27 @@ class GnaviController extends Controller
     }
 
     /**
-     * @Route("/admin/gnavi/api", name="admin_gnavi_api")
-     * @Template("StudyAppCoreBundle:Admin/Gnavi:api.html.twig")
+     * @Route("/admin/gnavi/api/import", name="admin_gnavi_api_import")
+     * @Template("StudyAppCoreBundle:Admin/Gnavi:import.html.twig")
      */
-    public function apiAction()
+    public function apiImportAction()
     {
-        $yaml = new Parser();
+        $criteria = [
+            'input_coordinates_mode' => self::COORDINATES_MODE,
+            'coordinates_mode' => self::COORDINATES_MODE,
+            'latitude' => 34.6952161,
+            'longitude' => 135.5015264,
+            'range' => 3
+        ];
 
-        try {
-            $path = __DIR__ . '/../../../Resources/config/gnavi.yml';
-            $gnaviConfig = $yaml->parse(file_get_contents($path));
-        } catch (ParseException $e) {
-            printf("Unable to parse the gnavi.yml string: %s", $e->getMessage());
-        }
+        $restQueryBuilder = new RestQueryBuilder();
+        $restQueryBuilder->setQueryFromCriteria($criteria);
 
-        $client = new Client();
-        $response = $client->request('GET', self::BASE_URL, [
-            'verify' => false,
-            'query' => [
-                'keyid' => $gnaviConfig['gnavi']['keyid'],
-                'format' => 'json',
-                'input_coordinates_mode' => self::COORDINATES_MODE,
-                'coordinates_mode' => self::COORDINATES_MODE,
-                'latitude' => 34.6952161,
-                'longitude' => 135.5015264,
-                'range' => 3
-            ]
-        ]);
+        $gnaviApiService = $this->get('study_app.domain.gnavi.service.api.service');
+        $response = $gnaviApiService
+            ->setUrl(self::BASE_URL)
+            ->setQueryBuilder($restQueryBuilder)
+            ->execute();
 
         $stores = [];
         if($response->getStatusCode() == '200') {
@@ -79,34 +72,6 @@ class GnaviController extends Controller
         return [
             'stores' => $stores->rest,
         ];
-    }
-
-    /**
-     * @Route("/admin/gnavi/api/import", name="admin_gnavi_api_import")
-     * @Template("StudyAppCoreBundle:Admin/Gnavi:import.html.twig")
-     */
-    public function apiImportAction()
-    {
-        $criteria = [];
-
-        $restQueryBuilder = new RestQueryBuilder();
-        $restQueryBuilder->setCriteria($criteria);
-
-        $gnaviApiService = $this->get('study_app.gnavi.service.api.service');
-        $gnaviApiService->setQueryBuilder($restQueryBuilder);
-
-        var_dump($gnaviApiService);
-        exit;
-    }
-
-    /**
-     * @Route("/admin/gnavi/area/{type}")
-     * @Template("StudyAppCoreBundle:Admin/Store:api.html.twig")
-     */
-    public function areaMasterAction($type)
-    {
-        $gnaviAreaCodeManeger = $this->get('study_app.factory.gnavi.area.code.maneger');
-        $areaCodeManager = $gnaviAreaCodeManeger->getAreaCodeManager('S');
     }
 
     private function decodeStoreDataByJson($json)
