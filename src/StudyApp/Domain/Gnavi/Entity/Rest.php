@@ -20,7 +20,7 @@ class Rest {
     private $id;
 
     /**
-     * @ORM\Column(name="gnavi_id", type="integer", unique=true)
+     * @ORM\Column(name="gnavi_id", type="string", length=255, unique=true)
      *
      * @Assert\NotBlank()
      */
@@ -51,4 +51,64 @@ class Rest {
      *
      */
     private $address;
+
+    public function setGnaviId($gnaviId)
+    {
+        $this->gnaviId = $gnaviId;
+
+        return $this;
+    }
+
+    public function getGnaviId()
+    {
+        return $this->gnaviId;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setNameKana($nameKana)
+    {
+        $this->nameKana = $nameKana;
+
+        return $this;
+    }
+
+    public function getNameKana()
+    {
+        return $this->nameKana;
+    }
+
+    public function setTel($tel)
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    public function getTel()
+    {
+        return $this->tel;
+    }
+
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
 }

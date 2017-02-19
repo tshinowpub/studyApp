@@ -69,6 +69,10 @@ class GnaviController extends Controller
             $stores = $this->decodeStoreDataByJson($json);
         }
 
+/**
+        var_dump($stores);
+        exit;
+**/
         return [
             'stores' => $stores->rest,
         ];
